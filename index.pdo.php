@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$pagePassword = '****';
+$pagePassword = '***';
 
 // Şifre kontrolü
 if (!isset($_SESSION['sql_access_granted']) || $_SESSION['sql_access_granted'] !== true) {
@@ -111,8 +111,6 @@ function renderInput($col, $value = '') {
 }
 
 
-//$pdo = $db->pdo;
-
 // Tabloları al
 $tables = $db->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
 $selectedTable = $_GET['table'] ?? null;
@@ -160,7 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     }
 
     try {
-        // $data: ['kolon1' => 'deger1', 'kolon2' => 'deger2']
         $setParts = [];
         $params = [];
         foreach ($data as $key => $value) {
@@ -271,8 +268,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['insert'])) {
 
 <div class="content">
     <?php
-    // Burada üstteki ortak kodlar ve $db, $pdo, $tables vs. tanımlı olduğunu varsayıyorum
-
     $page = $_GET['page'] ?? null;
 
     if ($page === 'sqlquery'):
@@ -287,11 +282,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['insert'])) {
             try {
                 if (stripos($query, 'SELECT') === 0) {
                     // SELECT sorgusu ise sonuçları çek
-                    $stmt = $pdo->query($query);
+                    $stmt = $db->query($query);
                     $queryResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     // Diğer sorguları çalıştır
-                    $affected = $pdo->exec($query);
+                    $affected = $db->exec($query);
                     $queryResult = "İşlem başarılı, etkilenen satır sayısı: " . $affected;
                 }
             } catch (PDOException $e) {
