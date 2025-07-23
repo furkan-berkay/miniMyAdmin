@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$pagePassword = 'f11235813/';
+$pagePassword = '****';
 
 // Şifre kontrolü
 if (!isset($_SESSION['sql_access_granted']) || $_SESSION['sql_access_granted'] !== true) {
